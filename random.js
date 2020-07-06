@@ -1,14 +1,23 @@
 console.log("1: Before calling DB ...");
 
 function getMovieDataFromDb() {
-    setTimeout(() => {
-        console.log("2: Reading movie data from our DB ...");
-        return { id: 30, name: 'Avengers : End Game' };
-    }, 4000);
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("2: Reading movie data from our DB ...");
+            // return { id: 30, name: 'Avengers : End Game' };
+            let dbData = { id: 30, name: 'Avengers : End Game' };
+            resolve(dbData);
+        }, 4000);
+    })
 }
 
-let movieDataFromDB = getMovieDataFromDb();
+getMovieDataFromDb().then(function (result) {
+    let movieDataFromDB = result;
+    console.log('3: Movie Data : ' + JSON.stringify(movieDataFromDB));
+})
 
-console.log('3: Movie Data : ' + movieDataFromDB);
+// let movieDataFromDB = getMovieDataFromDb();
 
-console.log('3: Doing some other work now ...');
+// console.log('3: Movie Data : ' + movieDataFromDB);
+
+console.log('4: Doing some other work now ...');
