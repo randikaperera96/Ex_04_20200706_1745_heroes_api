@@ -11,6 +11,7 @@ function getMovieDataFromDb() {
     })
 }
 
+//--Using resolved Promise
 getMovieDataFromDb().then(function (result) {
     let movieDataFromDB = result;
     console.log('3: Movie Data : ' + JSON.stringify(movieDataFromDB));
