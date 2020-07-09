@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const { json } = require('express');
 
 const heroesRoute = require('./route/heroes')
@@ -16,6 +17,11 @@ app.use(mailer);
 
 app.use('/', homeRoute);
 app.use('/api/heroes', heroesRoute);
+
+mongoose
+    .connect("mongodb://localhost/herodb", { useNewUrlParser: true })
+    .then(() => console.log("Connected to DB Successfully...! ")) //{} non necessary if arrow function only has one line
+    .catch(err => console.log("Error error has occured whilw connecting to DB: ", err))
 
 app.get('/*', (req, res) => {
     res.status(404).send("404 PFF.. Do you even API bro XD");
