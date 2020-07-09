@@ -19,7 +19,7 @@ app.use('/', homeRoute);
 app.use('/api/heroes', heroesRoute);
 
 mongoose
-    .connect("mongodb://localhost/herodb", { useNewUrlParser: true })
+    .connect("mongodb://localhost/herodb", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to DB Successfully...! ")) //{} non necessary if arrow function only has one line
     .catch(err => console.log("Error error has occured whilw connecting to DB: ", err))
 
