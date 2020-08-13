@@ -12,7 +12,7 @@ const mailer = require('./middleware/emailjob');
 
 
 const app = express();// top level function of express [ similar to "costructor" in OOP ]
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json()); //to read POST or PUT request body as JSON
 
