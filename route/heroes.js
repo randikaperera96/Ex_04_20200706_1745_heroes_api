@@ -170,50 +170,90 @@ router.put('/:heroId', (req, res) => {
 });
 */
 
-//basic
+// //basic
+// router.put('/:heroId', async (req, res) => {
+//     let heroId = req.params.heroId;
+//     let heroName = req.body.heroName;
+
+//     if (!heroName) {
+//         return res.status(400).send("Mandatory Fields Not Given! Check API documentation");
+//     }
+
+
+//     let hero = await Hero.findById(heroId);
+//     try {
+//         hero.set({
+//             name: heroName
+//         });
+
+//         hero = hero.save();
+//         res.send(heroTobeAddedToDb);
+//     } catch (e) {
+//         return res.status(500).send(e.message);
+//     }
+// });
+
+
 router.put('/:heroId', async (req, res) => {
     let heroId = req.params.heroId;
     let heroName = req.body.heroName;
+    let newLikeCount = req.body.likeCount;
 
-    if (!heroName) {
+    if (!heroName || !newLikeCount) {
         return res.status(400).send("Mandatory Fields Not Given! Check API documentation");
     }
 
 
-    let hero = await Hero.findById(heroId);
-    try {
-        hero.set({
-            name: heroName
-        });
+    let hero = await Hero.findOneAndUpdate(
+        { _id: heroId },
+        {
+            $set: {
+                name: heroName,
+                likeCount: newLikeCount
+            }
+        },
+        { new: false, useFindAndModify: false }
+    );
 
-        hero = hero.save();
-        res.send(heroTobeAddedToDb);
-    } catch (e) {
-        return res.status(500).send(e.message);
-    }
+    res.send(hero);
 });
 
-// my attempt
-// router.delete('/api/heroes', (req, res) => {
-router.delete('/', (req, res) => {
-    let heroId = parseInt(req.body.heroId);
-    let heroObjPos = heroArrray.findIndex(hObj => hObj.id === heroId);
 
-    if (heroObjPos == -1) {
-        return res.status(404).send("Hero not found for the given ID");
-    }
 
-    console.log(heroArrray);
-    let removedHero = heroArrray[heroObjPos];
+// // my attempt
+// // router.delete('/api/heroes', (req, res) => {
+// router.delete('/', (req, res) => {
+//     let heroId = parseInt(req.body.heroId);
+//     let heroObjPos = heroArrray.findIndex(hObj => hObj.id === heroId);
 
-    heroArrray.splice(heroObjPos, 1);
-    console.log(heroArrray);
+//     if (heroObjPos == -1) {
+//         return res.status(404).send("Hero not found for the given ID");
+//     }
 
-    // res.send("Removed hero : " + JSON.stringify(removedHero)); //din't send raw text
-    res.send(removedHero);
-});
+//     console.log(heroArrray);
+//     let removedHero = heroArrray[heroObjPos];
+
+//     heroArrray.splice(heroObjPos, 1);
+//     console.log(heroArrray);
+
+//     // res.send("Removed hero : " + JSON.stringify(removedHero)); //din't send raw text
+//     res.send(removedHero);
+// });
 
 // lecturere's code get from 20200702 lec
 // missing
+
+router.delete('/:heroId', async (req, res) => {
+    let hero = await Hero.findOneAndDelete({ _id: req.params.heroId });
+
+    if (!hero) {
+        res.status(400).send({
+            messageType: "success",
+            message: "The given ID doesn't exist on our server!"
+        });
+    }
+
+    res.send(hero);
+});
 
 module.exports = router;

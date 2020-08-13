@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { json } = require('express');
+const cors = require('cors');
 
 const heroesRoute = require('./route/heroes')
 const homeRoute = require('./route/home')
@@ -14,6 +15,7 @@ app.use(express.json()); //to read POST or PUT request body as JSON
 
 app.use(authenticator);
 app.use(mailer);
+app.use(cors())
 
 app.use('/', homeRoute);
 app.use('/api/heroes', heroesRoute);
