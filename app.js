@@ -26,7 +26,8 @@ app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute);
 
 mongoose
-    .connect("mongodb://localhost/herodb", { useNewUrlParser: true, useUnifiedTopology: true })
+    // .connect("mongodb://localhost/herodb", { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect("mongodb+srv://user:user%40123@cluster0.ao88m.mongodb.net/<dbname>?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to DB Successfully...! ")) //{} non necessary if arrow function only has one line
     .catch(err => console.log("Error error has occured whilw connecting to DB: ", err))
 
