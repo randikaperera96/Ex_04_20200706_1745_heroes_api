@@ -6,6 +6,7 @@ const cors = require('cors');
 const heroesRoute = require('./route/heroes')
 const homeRoute = require('./route/home')
 const userRoute = require('./route/users');
+const authRoute = require('./route/auth');
 const authenticator = require('./middleware/authenticator');
 const mailer = require('./middleware/emailjob');
 
@@ -22,6 +23,7 @@ app.use(cors())
 app.use('/', homeRoute);
 app.use('/api/heroes', heroesRoute);
 app.use('/api/users', userRoute);
+app.use('/api/auth', authRoute);
 
 mongoose
     .connect("mongodb://localhost/herodb", { useNewUrlParser: true, useUnifiedTopology: true })
